@@ -2,6 +2,7 @@ import Router from "next/router";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { api } from "../services/api";
 import { setCookie, parseCookies } from 'nookies'
+import { AxiosRequestConfig, AxiosRequestHeaders, HeadersDefaults } from "axios";
 
 type User = {
     email: string;
@@ -23,6 +24,7 @@ type AuthContextData = { // dados do usuário
 type AuthProviderProps = {
     children: ReactNode;
 }
+
 
 export const AuthContext = createContext({} as AuthContextData)
 
@@ -56,7 +58,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                 maxAge: 60 * 60 * 24 * 30, // (30 days) quanto tempo o cookie deve ser mantido no navegador
                 path: '/' // qualquer endereço da app vai ter acesso ao cookie, geralmente usado '/' para um cookie global
             })
-            setCookie(undefined, 'nextauth.refreshToken', refreshToken)
+
+            setCookie(undefined, 'nextauth.refreshToken', refreshToken, {
+                maxAge: 60 * 60 * 24 * 30, // (30 days) quanto tempo o cookie deve ser mantido no navegador
+                path: '/' // qualquer endereço da app vai ter acesso ao cookie, geralmente usado '/' para um cookie global
+            })
 
             setUser({
                 email,
