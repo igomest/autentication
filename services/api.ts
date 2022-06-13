@@ -1,6 +1,8 @@
 import axios, { AxiosError } from "axios";
 import { request } from "http";
-import { parseCookies, setCookie } from "nookies";
+import { Router } from "next/router";
+import { destroyCookie, parseCookies, setCookie } from "nookies";
+import { signOut } from "../contexts/AuthContext";
 
 let cookies = parseCookies();
 let isRefreshing = false;
@@ -92,7 +94,13 @@ api.interceptors.response.use(
         });
       } else {
         // o erro pode não ser do tipo token expirado, portanto o usuário é deslogado
+        destroyCookie(undefined, "nextauth.token");
+        destroyCookie(undefined, "nextauth.refreshToken");
+
+        signOut()
       }
     }
+
+    return Promise.reject(error);
   }
 );
