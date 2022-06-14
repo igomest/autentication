@@ -9,7 +9,7 @@ import { withSSRGuest } from "../utils/withSSRAuth"
 
 
 const Dashboard = () => {
-    const { user } = useContext(AuthContext)
+    const { user, signOut } = useContext(AuthContext)
 
     // const userCanSeeMetrics = useCan({
     //     roles: ['administrator', 'editor']
@@ -31,6 +31,8 @@ const Dashboard = () => {
             <Can permissions={['metrics.list']} roles={['administrator', 'editor']}>
                 <p><strong>Métricas</strong></p>
             </Can>
+
+            <button type="button" onClick={signOut}>Sign out</button>
         </>
     )
 }

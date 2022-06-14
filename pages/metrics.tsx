@@ -20,6 +20,9 @@ export const getServerSideProps = withSSRGuest(async (ctx) => {
     return {
         props: {}
     }
+}, {
+    permissions: ['metrics.list3'],
+    roles: ['administrator']
 })
 
 
