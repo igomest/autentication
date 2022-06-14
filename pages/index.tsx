@@ -1,5 +1,8 @@
+import { GetServerSideProps } from "next";
+import { parseCookies } from "nookies";
 import { FormEvent, useContext, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
+import { withSSRGuest } from "../utils/withSSRGuest";
 
 const Home = () => {
   const { signIn } = useContext(AuthContext)
@@ -20,8 +23,8 @@ const Home = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" placeholder="E-mail" onChange={e => setEmail(e.target.value)}/>
-      <input type="password" placeholder="Senha" onChange={e => setPassword(e.target.value)}/>
+      <input type="text" placeholder="E-mail" onChange={e => setEmail(e.target.value)} />
+      <input type="password" placeholder="Senha" onChange={e => setPassword(e.target.value)} />
       <button type="submit">Entrar</button>
     </form>
   );
